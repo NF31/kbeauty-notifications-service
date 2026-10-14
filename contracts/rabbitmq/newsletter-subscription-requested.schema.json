@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kbeauty.internal/contracts/rabbitmq/newsletter-subscription-requested.schema.json",
+  "title": "newsletter.subscription_requested",
+  "description": "Evenement publie par kbeauty-shop (exchange kbeauty.exchange, routing key newsletter.subscription_requested) quand un visiteur s'inscrit a la newsletter. Consomme par kbeauty-notifications-service, qui envoie l'email de confirmation. confirmUrl est deja signee par kbeauty-shop (URL::temporarySignedRoute) : ce service n'a pas besoin de connaitre APP_KEY pour la verifier, il se contente de la relayer dans l'email.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["eventType", "subscriberId", "email", "confirmUrl", "occurredAt"],
+  "properties": {
+    "eventType": {
+      "type": "string",
+      "const": "newsletter.subscription_requested"
+    },
+    "subscriberId": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Identifiant NewsletterSubscriber cote kbeauty-shop. Cle d'idempotence : un meme message recu deux fois ne renvoie qu'un seul email."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "maxLength": 255
+    },
+    "confirmUrl": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 2000,
+      "description": "Lien de confirmation signe, genere par kbeauty-shop, valable 7 jours."
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Horodatage ISO-8601 UTC de l'inscription."
+    }
+  }
+}
