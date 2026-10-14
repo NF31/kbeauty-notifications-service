@@ -11,5 +11,6 @@ import { NotificationsConsumer } from './notifications.consumer.js';
     EmailService,
     NotificationsConsumer,
   ],
+  exports: [NotificationsConsumer],
 })
 export class NotificationsModule {}
