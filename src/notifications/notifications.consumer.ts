@@ -46,6 +46,7 @@ export class NotificationsConsumer implements OnApplicationBootstrap, OnModuleDe
   private readonly logger = new Logger(NotificationsConsumer.name);
   private connection?: AmqpConnectionManager;
   private channel?: ChannelWrapper;
+  private connected = false;
 
   static readonly EXCHANGE = 'kbeauty.exchange';
   static readonly QUEUE = 'notifications.newsletter';
@@ -68,12 +69,14 @@ export class NotificationsConsumer implements OnApplicationBootstrap, OnModuleDe
     );
 
     this.connection = connect([url]);
-    this.connection.on('connect', () =>
-      this.logger.log('Connecte a RabbitMQ.'),
-    );
-    this.connection.on('disconnect', ({ err }) =>
-      this.logger.warn(`Deconnecte de RabbitMQ : ${err?.message}`),
-    );
+    this.connection.on('connect', () => {
+      this.connected = true;
+      this.logger.log('Connecte a RabbitMQ.');
+    });
+    this.connection.on('disconnect', ({ err }) => {
+      this.connected = false;
+      this.logger.warn(`Deconnecte de RabbitMQ : ${err?.message}`);
+    });
 
     this.channel = this.connection.createChannel({
       json: false,
@@ -122,6 +125,10 @@ export class NotificationsConsumer implements OnApplicationBootstrap, OnModuleDe
   async onModuleDestroy(): Promise<void> {
     await this.channel?.close();
     await this.connection?.close();
+  }
+
+  isConnected(): boolean {
+    return this.connected;
   }
 
   private async traiter(message: ConsumeMessage): Promise<void> {
