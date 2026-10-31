@@ -95,3 +95,9 @@ Avec un vrai RabbitMQ (`kbeauty_rabbitmq`) et le compte `notifications` cree par
 | Compte `notifications` tente de lire `sav.retours` | `Access refused` |
 
 Tests automatises : `npm run test` (contrat JSON Schema, 5/5).
+
+## Développement assisté par IA
+
+Ce projet est développé avec un assistant IA (Claude Code). Je définis le périmètre,
+l'architecture et les priorités, puis je relis et teste chaque changement avant de le
+fusionner. Les commits co-écrits avec l'IA le signalent par une ligne `Co-Authored-By`.
