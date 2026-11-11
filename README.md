@@ -2,10 +2,10 @@
 
 Microservice NestJS — notifications transactionnelles (email d'abord, SMS/push en
 extension future), decouplees du monolithe Laravel
-[kbeauty-shop](https://github.com/NF31/kbeauty-shop).
+kbeauty-shop (depot prive).
 
 Exercice de montee en competence (preparation Master MIAGE), voir
-[21-notifications-service.md](https://github.com/NF31/kbeauty-shop/blob/main/docs/montee-competence/21-notifications-service.md)
+[21-notifications-service.md](https://github.com/NF31/kbeauty-ecosystem/blob/main/docs/montee-competence/21-notifications-service.md)
 dans le repo principal pour le cadrage complet (pourquoi, backlog, architecture).
 
 ## Principe
